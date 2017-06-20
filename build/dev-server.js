@@ -11,7 +11,6 @@ var express = require('express')
 var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
-var axios = require('axios')
 
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
@@ -22,72 +21,6 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
-
-//axios 配制
-var axiosApiRoutes = express.Router()
-
-axiosApiRoutes.get('/getDiscList', function (req, res) {
-    var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
-    axios.get(url, {
-        headers: {
-            referer: 'https://c.y.qq.com/',
-            host: 'c.y.qq.com'
-        },
-        params: req.query
-    }).then((response) => {
-        res.json(response.data)
-    }).catch((e) => {
-        console.log(e)
-    })
-})
-
-axiosApiRoutes.post('/getQsdata', function (req, res) {
-    var url = 'http://member.eqkao.com/home/login'
-
-    axios.post(url, req, {
-        headers: {
-            referer: 'http://member.eqkao.com/',
-            host: 'member.eqkao.com'
-        }
-    }).then((response) => {
-        res.json(response.data)
-    }).catch((e) => {
-        console.log(e)
-    })
-})
-
-app.use('/api', axiosApiRoutes)
-
-//webpack本地数据data.json
-var appRoutes = require('../data.json')
-var seller = appRoutes.seller
-var goods = appRoutes.goods
-var ratings = appRoutes.ratings
-
-var apiRoutes = express.Router()
-apiRoutes.get('/seller', function (req, res) {
-    res.json({
-        errno: 0,
-        data: seller
-    })
-})
-
-apiRoutes.get('/goods', function (req, res) {
-    res.json({
-        errno: 0,
-        data: goods
-    })
-})
-
-apiRoutes.get('/ratings', function (req, res) {
-    res.json({
-        errno: 0,
-        data: ratings
-    })
-})
-
-app.use('/api', apiRoutes)
-
 
 var compiler = webpack(webpackConfig)
 
