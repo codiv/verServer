@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<h3>test api</h3>
-		<span>server:{{server.message}}</span>
+		<span>server：{{server.message}}</span>
 	</div>
 </template>
 
@@ -13,7 +13,7 @@
 		data () {
 			return {
 				server: {},
-				url: 'http://member.eqkaos.com/home/login',
+				url: '/get',
 				item: {
 					loginname: '15296284098',
 					password: '123456'
