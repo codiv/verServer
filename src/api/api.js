@@ -11,7 +11,8 @@ export function postServer(url, data) {
 
     return axios.post(url, params, {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'codivTock': '132465'
         }
     }).then((res) => {
         return Promise.resolve(res.data)
